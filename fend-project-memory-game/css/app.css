@@ -1,0 +1,295 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #fff url(../img/geometry2.png); /* Background pattern from Subtle Patterns */
+    font-family: "Coda", cursive;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+}
+
+/*
+ * Styles for the deck of cards
+ */
+
+.deck {
+    width: 660px;
+    height: 680px;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+}
+
+.deck .card {
+    height: 125px;
+    width: 125px;
+    background-color: #2e3d49;
+    font-size: 0;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    transform: rotateY(180deg);
+    transition: font-size 0.2s, background-color 1s, transform 1s;
+    z-index: 1;
+}
+
+.deck .card.open {
+    transform: rotateY(360deg);
+    transition: transform 1s;
+    background-color: #02b3e4;
+    cursor: default;
+}
+
+.deck .card.show {
+    font-size: 33px;
+}
+
+.deck .card.match {
+    cursor: default;
+    background-color: #02ccba;
+    font-size: 33px;
+    transform: none;
+    transition: background-color 0.3s;
+    animation: scale 0.5s linear;
+}
+
+.deck .card.mismatch {
+    background: linear-gradient(180deg, #ff4d4d 0%,  #ffb3b3 100%);
+    transition: background 0.3s;
+    animation: shake 0.5s linear;
+}
+
+/* Animation to run when two cards do not match */
+@keyframes shake {
+    15% {
+        transform: translateX(5px);
+    }
+    30% {
+        transform: translateX(-5px);
+    }
+    45% {
+        transform: translateX(5px);
+    }
+    60% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+    90% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Animation to run when two cards match */
+@keyframes scale {
+    25% {
+        transform: scale(1.1, 1.1);
+    }
+    50% {
+        transform: scale(1.2, 1.2);
+    }
+    75% {
+        transform: scale(1.1, 1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.deck .card.disable {
+    pointer-events: none;
+}
+
+/*
+ * Styles for the Score Panel
+ */
+
+.score-panel {
+    text-align: left;
+    width: 400px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.stars {
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.stars li {
+    list-style: none;
+    display: inline-block;
+    color: #ffcc00;
+}
+
+.score-panel .timer {
+    margin: 0 10px;
+}
+
+.score-panel .restart {
+    float: right;
+    cursor: pointer;
+}
+
+.score-panel .pause {
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.score-panel .pause.disable {
+    pointer-events: none;
+}
+
+/*
+ * Styles for modal with final score
+ */
+
+.final-score {
+    display: none;
+    width: 80%;
+    padding: 50px 0;
+    text-align: center;
+    position: fixed;
+    top: 25%;
+    left: 10%;
+    z-index: 1;
+    background: #fff url(../img/modal-background-transparent.png);
+    /*credits for bg picture http://pngriver.com/colorful-fireworks-png-transparent-clipart-image-7917/ */
+    background-size: contain;
+    background-position: center center;
+    font-size: 1.2em;
+    font-weight: 700;
+    border-radius: 10px;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    animation: fromtop 1s;
+}
+
+/* Animation to display modal */
+@keyframes fromtop {
+    from {
+        top: -1000px;
+    }
+    to {
+        top: 25%;
+    }
+}
+
+.final-score .stars {
+    display: block;
+    margin: 0 0 5px 0;
+}
+
+/* Styles for buttons on modal */
+.modal-button {
+    padding: 10px;
+    margin: 16px;
+    background-color: #02ccba;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 1px 3px 0px #000;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.modal-button:active {
+    box-shadow: 1px 2px 3px 1px #000;
+}
+
+/* Media quieries */
+@media screen and (max-width: 700px) {
+    /* Styles for deck of cards */
+    .deck {
+        width: 500px;
+        height: 500px;
+        padding: 20px;
+    }
+
+    .deck .card {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    /* Styles for deck of cards */
+    .deck {
+        width: 300px;
+        height: 300px;
+        padding: 10px;
+    }
+
+    .deck .card {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* Styles for score panel */
+    .score-panel {
+        width: 300px;
+        text-align: center;
+    }
+
+    .score-panel .restart {
+        float: none;
+    }
+
+    /* Styles for modal with final score */
+    .final-score {
+        top: 126px;
+        width: 92%;
+        left: 4%;
+        animation: fromtop 1s;
+    }
+
+    /* Animation of modal display */
+    @keyframes fromtop {
+        from {
+            top: -1000px;
+        }
+        to {
+            top: 126px;
+        }
+    }
+}
